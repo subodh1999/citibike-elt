@@ -19,7 +19,7 @@ def fetch_city(c):
     params = {
         "latitude": c["lat"], "longitude": c["lon"],
         "start_date": START_DATE, "end_date": END_DATE,
-        "hourly": ",".join(HOURLY), "timezone": "UTC",
+        "hourly": ",".join(HOURLY), "timezone": "America/New_York",
     }
     url = ARCHIVE_URL + "?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers={"Accept": "application/json"})
