@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    database: data-management2-498012
+    schema: raw
+    tables:
+      - name: trips
+      - name: weather
+      - name: station_status_stream
+      - name: station_info

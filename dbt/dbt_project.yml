@@ -1,0 +1,24 @@
+name: 'citibike_elt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'        # ignored by dbt Cloud (connection set in UI), but required
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+# dev_limit=true => staging scans ONE partition (cost guard on 92M trips).
+# full build:  dbt run --vars '{dev_limit: false}'
+vars:
+  dev_limit: true
+  dev_date: '2025-05-01'
+
+models:
+  citibike_elt:
+    staging:
+      +schema: staging
+      +materialized: view
+    intermediate:
+      +schema: intermediate
+    marts:
+      +schema: marts
