@@ -10,7 +10,7 @@ macro-paths: ["macros"]
 # dev_limit=true => staging scans ONE partition (cost guard on 92M trips).
 # full build:  dbt run --vars '{dev_limit: false}'
 vars:
-  dev_limit: true
+  dev_limit: false
   dev_date: '2025-05-01'
 
 models:
