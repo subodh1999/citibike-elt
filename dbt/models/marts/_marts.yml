@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: mart_station_hourly
+    description: "GOLD: trip activity per station per hour + station dimension (trip namespace)."
+    columns:
+      - name: station_id
+        data_tests:
+          - not_null
+      - name: departures
+        data_tests:
+          - not_null
+
+  - name: mart_demand_weather
+    description: "GOLD: demand + weather joined on city+hour. ML/Tableau feeder. 100% weather match verified."
+    columns:
+      - name: departures
+        description: "Demand target for ML (Phase 4)."
+        data_tests:
+          - not_null
+      - name: city
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['nyc', 'jc']

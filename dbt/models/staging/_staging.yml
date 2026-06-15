@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_trips
+    description: "One row per trip. Cleaned/renamed from raw.trips (Spark structural load). Row-level derivations only."
+    columns:
+      - name: ride_id
+        description: "Unique trip identifier."
+        data_tests:
+          - not_null
+      - name: city
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['nyc', 'jc']
+
+  - name: stg_weather
+    description: "One row per city per hour. NYC-local (America/New_York). Parsed from raw.weather string time."
+    columns:
+      - name: weather_hour
+        description: "Hour-truncated NYC-local timestamp. Join key to trips."
+        data_tests:
+          - not_null
+
+  - name: stg_station_status
+    description: "One row per station per stream snapshot. JSON parsed, booleans CASE-mapped."
+    columns:
+      - name: station_id
+        data_tests:
+          - not_null
+      - name: publish_time
+        description: "Authoritative event time + SCD2 ordering key."
+        data_tests:
+          - not_null
+
+  - name: stg_station_info
+    description: "GBFS station dimension (UUID namespace). City from lat/lon rule. NOTE: id namespace differs from trips."
+    columns:
+      - name: station_id
+        data_tests:
+          - not_null
+          - unique
+      - name: city
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['nyc', 'jc']
